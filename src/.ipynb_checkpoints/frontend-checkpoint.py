@@ -10,7 +10,7 @@ pd_stream.set_page_config(
 
 # The URL must use the service name 'backend', NOT '127.0.0.1'
 # Update this line in your src/frontend.py
-API_URL = "https://diabetes-readmission-pipeline.onrender.com"
+API_URL = "https://diabetes-readmission-pipeline-1.onrender.com"
 
 pd_stream.title("🏥 Diabetes Patient Readmission Risk Calculator")
 pd_stream.markdown(
@@ -145,7 +145,7 @@ with col2:
     if pd_stream.button("Run Inference", type="primary", use_container_width=True, key="run_inference_btn"):
         try:
             with pd_stream.spinner("Evaluating models across decision baselines..."):
-                response = requests.post(API_URL, json=payload, timeout=5.0)
+               response = requests.post(f"{API_URL}/predict", json=payload, timeout=5.0)
                 
             if response.status_code == 200:
                 data = response.json()
