@@ -18,8 +18,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code
 COPY . .
 
-# Expose FastAPI's default port
-EXPOSE 8000
+# Expose FastAPI port
+EXPOSE 10000 
 
-# Spin up web server to host our script endpoints
-CMD ["sh", "-c", "python -m streamlit run src/frontend.py --server.port $PORT --server.address 0.0.0.0"]
+# Run FastAPI with Uvicorn
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "10000"]
