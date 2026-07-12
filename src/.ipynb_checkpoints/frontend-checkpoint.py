@@ -145,7 +145,7 @@ with col2:
     if pd_stream.button("Run Inference", type="primary", use_container_width=True, key="run_inference_btn"):
         try:
             with pd_stream.spinner("Evaluating models across decision baselines..."):
-               response = requests.post(f"{API_URL}/predict", json=payload, timeout=30.0)
+               response = requests.post(f"{API_URL}/predict", json=payload, timeout=5.0)
                 
             if response.status_code == 200:
                 data = response.json()
