@@ -7,3 +7,4 @@ uvicorn
 xgboost
 tensorflow
 google-cloud-storage
+streamlit
