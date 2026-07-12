@@ -121,3 +121,6 @@ def predict_readmission(patient: PatientData):
         # --- LOG THE ERROR ---
         logger.error(f"Inference pipeline execution error: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Inference pipeline execution error: {str(e)}")
+
+
+print("deploy refresh")
