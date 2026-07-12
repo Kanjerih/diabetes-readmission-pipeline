@@ -417,3 +417,4 @@ zict @ file:///C:/Users/dev-admin/perseverance-python-buildout/croot/zict_172905
 zipp @ file:///C:/miniconda3/conda-bld/zipp_1763977974806/work
 zope.interface @ file:///C:/miniconda3/conda-bld/zope.interface_1762337163127/work
 zstandard @ file:///C:/miniconda3/conda-bld/zstandard_1758189089298/work
+aiobotocore
