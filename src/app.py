@@ -97,27 +97,15 @@ def predict_readmission(patient: PatientData):
         final_df = input_df.reindex(columns=expected_features, fill_value=0)
         
         # Calculate raw operational predictive probabilities
-        #probability = float(model.predict_proba(final_df)[:, 1][0])
-        try:
-            probability = float(model.predict_proba(final_df)[:, 1][0])
-        except Exception as e:
-            logger.error(f"MODEL ERROR: {str(e)}")
-            raise
+        probability = float(model.predict_proba(final_df)[:, 1][0])
 
 
         # Calculate SHAP contributions
-        #shap_values = explainer.shap_values(final_df)
-        #feature_contributions = dict(zip(expected_features, shap_values[0]))
-
-        feature_contributions = {}
-
-
-        # --- LOG THE RESULT ---
-        #logger.info(f"Prediction result: {probability}")
-        logger.info(f"Expected features: {expected_features[:5]} ... total={len(expected_features)}")
-        logger.info(f"Input columns: {list(final_df.columns)}")
-        logger.info(f"Input shape: {final_df.shape}")
+        shap_values = explainer.shap_values(final_df)
+        feature_contributions = dict(zip(expected_features, shap_values[0]))
         
+        # --- LOG THE RESULT ---
+        logger.info(f"Prediction result: {probability}")
         
         # Evaluate operational outcome tags across our verified threshold baselines
         return {
