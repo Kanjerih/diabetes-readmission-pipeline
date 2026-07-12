@@ -1,6 +1,7 @@
 import os
 import joblib
 import pandas as pd
+import xgboost as xgb
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
@@ -12,11 +13,12 @@ app = FastAPI(
 )
 
 # Define the expected absolute path to the saved artifact
-MODEL_PATH = os.path.join("models", "diabetes_readmission_xgb_model.pkl")
+MODEL_PATH = os.path.join("models", "diabetes_readmission_xgb_model.json")
 
 # Load model artifact safely at runtime startup
 if os.path.exists(MODEL_PATH):
-    model = joblib.load(MODEL_PATH)
+    model = xgb.XGBClassifier()
+    model.load_model(MODEL_PATH)
     # Extract exact features expected by the model to prevent array shape alignment errors
     expected_features = model.get_booster().feature_names
 else:

@@ -4,7 +4,7 @@ from src.train import train_pipeline
 
 def main():
     DATA_PATH = os.path.join("data", "diabetic_data.csv")
-    MODEL_PATH = os.path.join("models", "diabetes_readmission_xgb_model.pkl")
+    MODEL_PATH = os.path.join("models", "diabetes_readmission_xgb_model.json")
     
     print("====================================================")
     print(" STARTING MACHINE LEARNING LIFECYCLE PIPELINE")

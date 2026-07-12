@@ -60,8 +60,11 @@ def train_pipeline(data_path, model_save_path):
         
     # Save the new production-grade model artifact
     os.makedirs(os.path.dirname(model_save_path), exist_ok=True)
-    joblib.dump(xgb_model, model_save_path)
-    print(f"\nSuccessfully saved optimized XGBoost model to: {model_save_path}")
+    # Ensure your path ends in .json
+    json_path = model_save_path.replace(".pkl", ".json")
+    xgb_model.save_model(json_path)
+    print(f"\nSuccessfully saved optimized XGBoost model to: {json_path}")
 
 if __name__ == "__main__":
-    train_pipeline("data/diabetic_data.csv", "models/diabetes_readmission_xgb_model.pkl")
+    # Update the filename here as well
+    train_pipeline("data/diabetic_data.csv", "models/diabetes_readmission_xgb_model.json")
