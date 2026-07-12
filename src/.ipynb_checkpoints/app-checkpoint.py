@@ -4,6 +4,12 @@ import pandas as pd
 import xgboost as xgb
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+import logging
+import shap
+import numpy as np
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -25,8 +31,11 @@ if os.path.exists(MODEL_PATH):
     model.load_model(MODEL_PATH)
     # Extract exact features expected by the model to prevent array shape alignment errors
     expected_features = model.get_booster().feature_names
+    # Initialize the SHAP explainer once at startup
+    explainer = shap.TreeExplainer(model)
 else:
     model = None
+    explainer = None
     expected_features = []
 
 class PatientData(BaseModel):
@@ -58,8 +67,11 @@ def health_check():
 @app.post("/predict")
 def predict_readmission(patient: PatientData):
     """Generates readmission probabilities and applies custom operational decision thresholds."""
-    if model is None:
-        raise HTTPException(status_code=500, detail="Prediction engine is uninitialized.")
+    if model is None or explainer is None: 
+        raise HTTPException(status_code=500, detail="Prediction engine or explainer is uninitialized.")
+    
+    # --- LOG THE REQUEST ---
+    logger.info(f"Incoming prediction request: {patient.model_dump()}")
     
     try:
         # Convert Pydantic object properties into a base dictionary layout
@@ -76,10 +88,19 @@ def predict_readmission(patient: PatientData):
         
         # Calculate raw operational predictive probabilities
         probability = float(model.predict_proba(final_df)[:, 1][0])
+
+
+        # Calculate SHAP contributions
+        shap_values = explainer.shap_values(final_df)
+        feature_contributions = dict(zip(expected_features, shap_values[0]))
+        
+        # --- LOG THE RESULT ---
+        logger.info(f"Prediction result: {probability}")
         
         # Evaluate operational outcome tags across our verified threshold baselines
         return {
             "readmission_probability": round(probability, 4),
+            "feature_contributions": feature_contributions,
             "decisions": {
                 "threshold_0_45": int(probability > 0.45), # Catch-all clinical setting (Recall: 70%)
                 "threshold_0_50": int(probability > 0.50), # Balanced clinical baseline (Recall: 58%)
@@ -87,4 +108,6 @@ def predict_readmission(patient: PatientData):
             }
         }
     except Exception as e:
+        # --- LOG THE ERROR ---
+        logger.error(f"Inference pipeline execution error: {str(e)}")
         raise HTTPException(status_code=400, detail=f"Inference pipeline execution error: {str(e)}")

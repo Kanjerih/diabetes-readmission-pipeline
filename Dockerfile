@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 8000
 
 # Spin up web server to host our script endpoints
-CMD ["uvicorn", "src.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "-m", "streamlit", "run", "src/frontend.py", "--server.port", "10000", "--server.address", "0.0.0.0"]
