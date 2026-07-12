@@ -9,7 +9,8 @@ pd_stream.set_page_config(
 )
 
 # The URL must use the service name 'backend', NOT '127.0.0.1'
-API_URL = "http://backend:8000/predict"
+# Update this line in your src/frontend.py
+API_URL = "https://diabetes-readmission-pipeline.onrender.com"
 
 pd_stream.title("🏥 Diabetes Patient Readmission Risk Calculator")
 pd_stream.markdown(

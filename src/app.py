@@ -3,6 +3,7 @@ import joblib
 import pandas as pd
 import xgboost as xgb
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import logging
 import shap
@@ -16,6 +17,15 @@ app = FastAPI(
     title="Diabetes Readmission Prediction Service",
     description="Production API serving an optimized XGBoost classifier for minority-class readmission risk.",
     version="1.0.0"
+)
+
+
+# ADD THE MIDDLEWARE
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
