@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 8000
 
 # Spin up web server to host our script endpoints
-CMD ["python", "-m", "streamlit", "run", "src/frontend.py", "--server.port", "10000", "--server.address", "0.0.0.0"]
+CMD ["sh", "-c", "python -m streamlit run src/frontend.py --server.port $PORT --server.address 0.0.0.0"]
