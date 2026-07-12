@@ -12,6 +12,10 @@ app = FastAPI(
     version="1.0.0"
 )
 
+@app.get("/")
+def read_root():
+    return {"message": "Diabetes Readmission Prediction API is active."}
+
 # Define the expected absolute path to the saved artifact
 MODEL_PATH = os.path.join("models", "diabetes_readmission_xgb_model.json")
 
