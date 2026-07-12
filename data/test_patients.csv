@@ -1,0 +1,3 @@
+gender,admission_type_id,discharge_disposition_id,admission_source_id,time_in_hospital,num_lab_procedures,num_procedures,num_medications,number_outpatient,number_emergency,number_inpatient,number_diagnoses,age_num,insulin
+1.0,1,1,7,6,55,2,18,0,1,3,9,65.0,1
+0.0,2,1,1,2,30,1,10,1,0,0,5,45.0,0
