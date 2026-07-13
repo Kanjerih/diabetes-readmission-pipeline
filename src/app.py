@@ -1,5 +1,4 @@
 import os
-import joblib
 import pandas as pd
 import xgboost as xgb
 from fastapi import FastAPI, HTTPException
@@ -7,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import logging
 import shap
-import numpy as np
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
