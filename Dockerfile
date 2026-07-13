@@ -22,4 +22,4 @@ COPY . .
 EXPOSE 10000 
 
 # Run FastAPI with Uvicorn
-CMD ["sh", "-c", "uvicorn src.main:app --host 0.0.0.0 --port ${PORT:-10000}"]
+CMD ["sh", "-c", "uvicorn src.app:app --host 0.0.0.0 --port ${PORT:-10000}"]

@@ -23,8 +23,8 @@ app = FastAPI(
 # ADD THE MIDDLEWARE
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://your-frontend-app.onrender.com"],  
-    allow_methods=["POST"],
+    allow_origins=["*"],  
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
@@ -33,7 +33,11 @@ def read_root():
     return {"message": "Diabetes Readmission Prediction API is active."}
 
 # Define the expected absolute path to the saved artifact
-MODEL_PATH = os.path.join("models", "diabetes_readmission_xgb_model.json")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "models", "diabetes_readmission_xgb_model.json")
+
+print("MODEL PATH:", MODEL_PATH)
+print("MODEL EXISTS:", os.path.exists(MODEL_PATH))
 
 # Load model artifact safely at runtime startup
 if os.path.exists(MODEL_PATH):
