@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest ruff httpx
+
+      - name: Lint with ruff
+        run: |
+          # E/F = pyflakes+pycodestyle core rules; keep this permissive for now,
+          # tighten as the codebase matures
+          ruff check . --select E9,F --output-format=github
+
+      - name: Verify model artifact loads
+        run: |
+          python -c "
+          import xgboost as xgb
+          model = xgb.XGBClassifier()
+          model.load_model('models/diabetes_readmission_xgb_model.json')
+          features = model.get_booster().feature_names
+          assert features is not None and len(features) > 0, 'Model has no feature names'
+          print(f'Model loaded OK with {len(features)} features')
+          "
+
+      - name: Run test suite
+        run: pytest tests/ -v
