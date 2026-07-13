@@ -103,10 +103,21 @@ def predict_readmission(patient: PatientData):
         # Calculate raw operational predictive probabilities
         probability = float(model.predict_proba(final_df)[:, 1][0])
 
-
         # Calculate SHAP contributions
         shap_values = explainer.shap_values(final_df)
-        feature_contributions = dict(zip(expected_features, shap_values[0]))
+        # shap_values can be a list (per-class) or a single array depending on SHAP version;
+        # normalize to the row-level contribution array before zipping
+        if isinstance(shap_values, list):
+            row_shap = shap_values[1][0] if len(shap_values) > 1 else shap_values[0][0]
+        else:
+            row_shap = shap_values[0]
+        # Cast numpy floats to native Python floats -- required for JSON serialization,
+        # otherwise FastAPI throws an unhandled TypeError during response encoding
+        # (this happens AFTER the try block returns, which is why it surfaced as a
+        # bare 500 "Internal Server Error" instead of the custom 400 message below)
+        feature_contributions = {
+            k: float(v) for k, v in zip(expected_features, row_shap)
+        }
         
         # --- LOG THE RESULT ---
         logger.info(f"Prediction result: {probability}")
