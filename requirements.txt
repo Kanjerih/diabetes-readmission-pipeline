@@ -1,9 +1,9 @@
-aiobotocore
 fastapi
-pandas
-scikit-learn
-shap
 uvicorn
+pandas
+numpy
+scikit-learn
 xgboost
-google-cloud-storage
-streamlit
+shap
+joblib
+ 

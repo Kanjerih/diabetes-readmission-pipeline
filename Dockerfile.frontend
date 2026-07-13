@@ -1,0 +1,21 @@
+# Lightweight Python runtime base image
+FROM python:3.11-slim
+ 
+# Set an isolated working directory inside the container
+WORKDIR /app
+ 
+# Copy frontend requirements first to utilize Docker's layer caching
+COPY frontend-requirements.txt requirements.txt
+ 
+# Install dependencies cleanly
+RUN pip install --no-cache-dir -r requirements.txt
+ 
+# Copy the rest of the application code
+COPY . .
+ 
+# Expose Streamlit port
+EXPOSE 8501
+ 
+# Run Streamlit
+CMD ["sh", "-c", "python -m streamlit run src/frontend.py --server.port ${PORT:-8501} --server.address 0.0.0.0"]
+ 
