@@ -1,0 +1,10 @@
+[
+  {
+    "version_id": "20260714_074201_a062920",
+    "timestamp_utc": "20260714_074201",
+    "git_commit": "a062920",
+    "roc_auc": 0.681079292551229,
+    "model_file": "diabetes_readmission_xgb_model_20260714_074201_a062920.json",
+    "metadata_file": "diabetes_readmission_xgb_model_20260714_074201_a062920.metadata.json"
+  }
+]
