@@ -1,0 +1,64 @@
+name: Automated Retraining
+
+on:
+  schedule:
+    # Runs every Sunday at 02:00 UTC. Adjust cron expression to change frequency.
+    - cron: '0 2 * * 0'
+  workflow_dispatch:
+    # Allows manually triggering this workflow from the GitHub Actions tab
+
+jobs:
+  retrain:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-retrain-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-retrain-
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install mlflow
+
+      - name: Run training pipeline
+        id: train
+        run: |
+          python main.py
+
+      - name: Check for changes to commit
+        id: check_changes
+        run: |
+          if git diff --quiet -- models/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push updated model artifacts
+        if: steps.check_changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add models/
+          git commit -m "Automated retraining run [skip ci]"
+          git push origin main
+
+      - name: No changes to commit
+        if: steps.check_changes.outputs.changed == 'false'
+        run: echo "Training completed but no model changes to commit (this run may have been blocked by the validation gate, or produced an identical model)."
