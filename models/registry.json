@@ -6,5 +6,14 @@
     "roc_auc": 0.681079292551229,
     "model_file": "diabetes_readmission_xgb_model_20260714_074201_a062920.json",
     "metadata_file": "diabetes_readmission_xgb_model_20260714_074201_a062920.metadata.json"
+  },
+  {
+    "version_id": "20260714_075054_fea0cee",
+    "timestamp_utc": "20260714_075054",
+    "git_commit": "fea0cee",
+    "roc_auc": 0.681079292551229,
+    "model_file": "diabetes_readmission_xgb_model_20260714_075054_fea0cee.json",
+    "metadata_file": "diabetes_readmission_xgb_model_20260714_075054_fea0cee.metadata.json",
+    "promoted_to_production": true
   }
 ]
