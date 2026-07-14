@@ -22,9 +22,9 @@ def get_git_commit_hash():
 
 
 def train_pipeline(data_path, model_save_path):
-    # MLflow: write tracking data to a local ./mlruns folder (no server needed).
-    # View the dashboard later with: mlflow ui
-    mlflow.set_tracking_uri("file:./mlruns")
+    # MLflow: write tracking data to a local SQLite database file (no server needed).
+    # View the dashboard later with: mlflow ui --backend-store-uri sqlite:///mlflow.db
+    mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow.set_experiment("diabetes-readmission")
 
     with mlflow.start_run():
