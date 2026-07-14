@@ -95,14 +95,49 @@ def train_pipeline(data_path, model_save_path):
     versioned_filename = f"diabetes_readmission_xgb_model_{version_id}.json"
     versioned_path = os.path.join(versions_dir, versioned_filename)
 
-    # Save the versioned, permanent copy
+    # Save the versioned, permanent copy -- this always happens, pass or fail,
+    # so every training run is recorded even if it doesn't get promoted
     xgb_model.save_model(versioned_path)
     print(f"\nSaved versioned model artifact to: {versioned_path}")
 
-    # Also overwrite the fixed-path "latest" model that the API service loads
+    # ==========================================
+    # 6b. VALIDATION GATE: only promote to "latest" if this model
+    # doesn't regress meaningfully against the best ROC-AUC on record
+    # ==========================================
+    registry_path = os.path.join(os.path.dirname(model_save_path), "registry.json")
+    previous_registry = []
+    if os.path.exists(registry_path):
+        with open(registry_path, "r") as f:
+            try:
+                previous_registry = json.load(f)
+            except json.JSONDecodeError:
+                previous_registry = []
+
+    ROC_AUC_TOLERANCE = 0.01  # allow small noise; anything worse than this blocks promotion
+    previous_best_auc = None
+    if previous_registry:
+        previous_best_auc = max(entry["roc_auc"] for entry in previous_registry)
+
+    passed_validation = True
+    if previous_best_auc is not None and roc_auc < (previous_best_auc - ROC_AUC_TOLERANCE):
+        passed_validation = False
+        print(f"\n VALIDATION GATE FAILED: new ROC-AUC ({roc_auc:.4f}) is worse than "
+              f"the previous best on record ({previous_best_auc:.4f}) by more than "
+              f"the allowed tolerance ({ROC_AUC_TOLERANCE}).")
+        print(" This version will be recorded, but NOT promoted to production.")
+    else:
+        if previous_best_auc is not None:
+            print(f"\n Validation gate passed: ROC-AUC {roc_auc:.4f} vs. previous best {previous_best_auc:.4f}")
+        else:
+            print(f"\n Validation gate passed: no previous version on record, {roc_auc:.4f} is the new baseline")
+
     json_path = model_save_path.replace(".pkl", ".json")
-    xgb_model.save_model(json_path)
-    print(f"Updated production 'latest' model at: {json_path}")
+    if passed_validation:
+        # Overwrite the fixed-path "latest" model that the API service loads
+        xgb_model.save_model(json_path)
+        print(f"Updated production 'latest' model at: {json_path}")
+    else:
+        print(f"Skipped updating production model at: {json_path} (validation gate blocked promotion)")
 
     # Write metadata for this version
     metadata = {
@@ -118,36 +153,33 @@ def train_pipeline(data_path, model_save_path):
         "num_features": X.shape[1],
         "num_train_rows": len(X_train),
         "num_test_rows": len(X_test),
-        "model_file": versioned_filename
+        "model_file": versioned_filename,
+        "promoted_to_production": passed_validation
     }
     metadata_path = os.path.join(versions_dir, f"diabetes_readmission_xgb_model_{version_id}.metadata.json")
     with open(metadata_path, "w") as f:
         json.dump(metadata, f, indent=2)
     print(f"Saved metadata to: {metadata_path}")
 
-    # Append to the running registry log
-    registry_path = os.path.join(os.path.dirname(model_save_path), "registry.json")
-    registry = []
-    if os.path.exists(registry_path):
-        with open(registry_path, "r") as f:
-            try:
-                registry = json.load(f)
-            except json.JSONDecodeError:
-                registry = []
-
-    registry.append({
+    # Append to the running registry log (reusing the registry already loaded for the gate check above)
+    previous_registry.append({
         "version_id": version_id,
         "timestamp_utc": timestamp,
         "git_commit": commit_hash,
         "roc_auc": roc_auc,
         "model_file": versioned_filename,
-        "metadata_file": os.path.basename(metadata_path)
+        "metadata_file": os.path.basename(metadata_path),
+        "promoted_to_production": passed_validation
     })
 
     with open(registry_path, "w") as f:
-        json.dump(registry, f, indent=2)
+        json.dump(previous_registry, f, indent=2)
     print(f"Updated model registry at: {registry_path}")
     print(f"\nModel version: {version_id}")
+
+    if not passed_validation:
+        print("\nExiting with error status: validation gate blocked this model from production.")
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
