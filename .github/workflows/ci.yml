@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   pull_request:
-    branches: [main]
+    branches: [main, staging]
 
 jobs:
   test:
@@ -51,4 +51,6 @@ jobs:
           "
 
       - name: Run test suite
+        env:
+          PYTHONPATH: .
         run: pytest tests/ -v
