@@ -215,9 +215,7 @@ marimo/_lsp/
 __marimo__/
 
 # Streamlit
-.streamlit/secrets.toml
+
+# MLflow local tracking data (kept local-only, not committed)
 mlflow.db
 mlruns/
-__pycache__/
-*.pyc
-models/versions/
