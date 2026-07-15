@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+mlflow.db
+mlruns/
+__pycache__/
+*.pyc
+models/versions/
