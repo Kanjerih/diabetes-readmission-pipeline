@@ -1,0 +1,189 @@
+{
+  "version_id": "20260715_060205_f33805b",
+  "timestamp_utc": "20260715_060205",
+  "git_commit": "f33805b",
+  "data_path": "data/diabetic_data.csv",
+  "hyperparameters": {
+    "n_estimators": 200,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "scale_pos_weight": 7.960158485582214,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "random_state": 42,
+    "eval_metric": "logloss",
+    "n_jobs": -1
+  },
+  "metrics": {
+    "roc_auc": 0.6824506173439256,
+    "threshold_reports": {
+      "0.4": {
+        "No Readmit": {
+          "precision": 0.947531629868519,
+          "recall": 0.4224409666537632,
+          "f1-score": 0.5843564735131,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.15034168564920272,
+          "recall": 0.8137384412153237,
+          "f1-score": 0.2537938611549818,
+          "support": 2271.0
+        },
+        "accuracy": 0.46610002947823526,
+        "macro avg": {
+          "precision": 0.5489366577588609,
+          "recall": 0.6180897039345434,
+          "f1-score": 0.41907516733404093,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8585850658849253,
+          "recall": 0.46610002947823526,
+          "f1-score": 0.5474739102495997,
+          "support": 20354.0
+        }
+      },
+      "0.45": {
+        "No Readmit": {
+          "precision": 0.9364129418365439,
+          "recall": 0.5537797931759111,
+          "f1-score": 0.6959724780206414,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.16469979296066253,
+          "recall": 0.7005724350506385,
+          "f1-score": 0.26670019277512363,
+          "support": 2271.0
+        },
+        "accuracy": 0.5701581998624349,
+        "macro avg": {
+          "precision": 0.5505563673986033,
+          "recall": 0.6271761141132748,
+          "f1-score": 0.48133633539788256,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8503089543600219,
+          "recall": 0.5701581998624349,
+          "f1-score": 0.6480763711230993,
+          "support": 20354.0
+        }
+      },
+      "0.5": {
+        "No Readmit": {
+          "precision": 0.9281159860330955,
+          "recall": 0.6761599292152851,
+          "f1-score": 0.7823527529833317,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.18440111420612815,
+          "recall": 0.5830030823425804,
+          "f1-score": 0.28018199132366944,
+          "support": 2271.0
+        },
+        "accuracy": 0.6657659428122237,
+        "macro avg": {
+          "precision": 0.5562585501196118,
+          "recall": 0.6295815057789327,
+          "f1-score": 0.5312673721535006,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8451359096884437,
+          "recall": 0.6657659428122237,
+          "f1-score": 0.7263229898051312,
+          "support": 20354.0
+        }
+      },
+      "0.55": {
+        "No Readmit": {
+          "precision": 0.9188227684346701,
+          "recall": 0.7855444339987834,
+          "f1-score": 0.8469725427063769,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.20760114425827544,
+          "recall": 0.4473800088066931,
+          "f1-score": 0.28360083740404746,
+          "support": 2271.0
+        },
+        "accuracy": 0.7478136975533065,
+        "macro avg": {
+          "precision": 0.5632119563464728,
+          "recall": 0.6164622214027382,
+          "f1-score": 0.5652866900552121,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8394681301078258,
+          "recall": 0.7478136975533065,
+          "f1-score": 0.7841142768745213,
+          "support": 20354.0
+        }
+      },
+      "0.6": {
+        "No Readmit": {
+          "precision": 0.910732893365752,
+          "recall": 0.8699883868827075,
+          "f1-score": 0.8898945046242611,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.2366883116883117,
+          "recall": 0.32100396301188905,
+          "f1-score": 0.2724724350588675,
+          "support": 2271.0
+        },
+        "accuracy": 0.808735383708362,
+        "macro avg": {
+          "precision": 0.5737106025270319,
+          "recall": 0.5954961749472982,
+          "f1-score": 0.5811834698415643,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8355262880307089,
+          "recall": 0.808735383708362,
+          "f1-score": 0.8210055628937409,
+          "support": 20354.0
+        }
+      },
+      "0.65": {
+        "No Readmit": {
+          "precision": 0.9045091416009865,
+          "recall": 0.9329204224962672,
+          "f1-score": 0.9184951271301791,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.28772753963593656,
+          "recall": 0.21576398062527521,
+          "f1-score": 0.24660291897332662,
+          "support": 2271.0
+        },
+        "accuracy": 0.8529036061707772,
+        "macro avg": {
+          "precision": 0.5961183406184616,
+          "recall": 0.5743422015607712,
+          "f1-score": 0.5825490230517528,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8356916601200675,
+          "recall": 0.8529036061707772,
+          "f1-score": 0.8435286731297758,
+          "support": 20354.0
+        }
+      }
+    }
+  },
+  "num_features": 66,
+  "num_train_rows": 81412,
+  "num_test_rows": 20354,
+  "model_file": "diabetes_readmission_xgb_model_20260715_060205_f33805b.json",
+  "promoted_to_production": true
+}
