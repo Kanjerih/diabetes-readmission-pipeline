@@ -1,6 +1,5 @@
 import os
 import json
-import joblib
 import pandas as pd
 import xgboost as xgb
 from fastapi import FastAPI, HTTPException
@@ -8,7 +7,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import logging
 import shap
-import numpy as np
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
