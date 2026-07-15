@@ -2,7 +2,7 @@
 
 A production-style machine learning system that predicts 30-day hospital readmission risk for diabetic patients, built end-to-end with a working MLOps pipeline: continuous integration, model versioning, automated validation gating, experiment tracking, automated retraining, and live drift monitoring.
 
-**Live app:** *https://diabetes-readmission-pipeline-frontend.onrender.com* · **API:** [FastAPI backend](https://diabetes-readmission-pipeline.onrender.com/docs)
+**Live app:** [Streamlit frontend](https://diabetes-readmission-pipeline-frontend.onrender.com) · **API:** [FastAPI backend](https://diabetes-readmission-pipeline.onrender.com/docs)
 
 ---
 
