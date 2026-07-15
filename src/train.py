@@ -160,6 +160,25 @@ def train_pipeline(data_path, model_save_path):
             # Overwrite the fixed-path "latest" model that the API service loads
             xgb_model.save_model(json_path)
             print(f"Updated production 'latest' model at: {json_path}")
+
+            # ==========================================
+            # 6c. FEATURE BASELINE for drift monitoring: only refreshed when this
+            # model is actually promoted, so the baseline always reflects the
+            # training data behind the currently-live model.
+            # ==========================================
+            monitored_fields = [
+                "gender", "admission_type_id", "discharge_disposition_id", "admission_source_id",
+                "time_in_hospital", "num_lab_procedures", "num_procedures", "num_medications",
+                "number_outpatient", "number_emergency", "number_inpatient", "number_diagnoses", "age_num"
+            ]
+            feature_baseline = {
+                col: {"mean": float(X[col].mean()), "std": float(X[col].std())}
+                for col in monitored_fields if col in X.columns
+            }
+            baseline_path = os.path.join(os.path.dirname(model_save_path), "feature_baseline.json")
+            with open(baseline_path, "w") as f:
+                json.dump(feature_baseline, f, indent=2)
+            print(f"Updated feature baseline for drift monitoring at: {baseline_path}")
         else:
             print(f"Skipped updating production model at: {json_path} (validation gate blocked promotion)")
 
