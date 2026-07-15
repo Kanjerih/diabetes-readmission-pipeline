@@ -1,0 +1,189 @@
+{
+  "version_id": "20260714_080924_c47d6a2",
+  "timestamp_utc": "20260714_080924",
+  "git_commit": "c47d6a2",
+  "data_path": "data\\diabetic_data.csv",
+  "hyperparameters": {
+    "n_estimators": 200,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "scale_pos_weight": 7.960158485582214,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "random_state": 42,
+    "eval_metric": "logloss",
+    "n_jobs": -1
+  },
+  "metrics": {
+    "roc_auc": 0.681079292551229,
+    "threshold_reports": {
+      "0.4": {
+        "No Readmit": {
+          "precision": 0.9454926624737946,
+          "recall": 0.4239893822927612,
+          "f1-score": 0.585445937690898,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.14936708860759493,
+          "recall": 0.805372082782915,
+          "f1-score": 0.2519977955359603,
+          "support": 2271.0
+        },
+        "accuracy": 0.46654220300678,
+        "macro avg": {
+          "precision": 0.5474298755406948,
+          "recall": 0.6146807325378381,
+          "f1-score": 0.41872186661342914,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8566648557404675,
+          "recall": 0.46654220300678,
+          "f1-score": 0.5482414210929879,
+          "support": 20354.0
+        }
+      },
+      "0.45": {
+        "No Readmit": {
+          "precision": 0.9370786516853933,
+          "recall": 0.5534479898246972,
+          "f1-score": 0.6958940305253277,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.1652884019020054,
+          "recall": 0.7040951122853368,
+          "f1-score": 0.26772708246128085,
+          "support": 2271.0
+        },
+        "accuracy": 0.570256460646556,
+        "macro avg": {
+          "precision": 0.5511835267936993,
+          "recall": 0.628771551055017,
+          "f1-score": 0.4818105564933043,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8509660616658358,
+          "recall": 0.570256460646556,
+          "f1-score": 0.6481212517568572,
+          "support": 20354.0
+        }
+      },
+      "0.5": {
+        "No Readmit": {
+          "precision": 0.927832716841549,
+          "recall": 0.6796991649615661,
+          "f1-score": 0.7846153846153846,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.1850288448009005,
+          "recall": 0.5790400704535447,
+          "f1-score": 0.2804435913840904,
+          "support": 2271.0
+        },
+        "accuracy": 0.6684681143755528,
+        "macro avg": {
+          "precision": 0.5564307808212248,
+          "recall": 0.6293696177075554,
+          "f1-score": 0.5325294879997375,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8449542854077122,
+          "recall": 0.6684681143755528,
+          "f1-score": 0.7283623560987161,
+          "support": 20354.0
+        }
+      },
+      "0.55": {
+        "No Readmit": {
+          "precision": 0.9177659095296313,
+          "recall": 0.7887518663938505,
+          "f1-score": 0.8483821080180823,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.2063162268855184,
+          "recall": 0.4372523117569353,
+          "f1-score": 0.2803500846979108,
+          "support": 2271.0
+        },
+        "accuracy": 0.749533261275425,
+        "macro avg": {
+          "precision": 0.5620410682075748,
+          "recall": 0.6130020890753929,
+          "f1-score": 0.5643660963579966,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8383858255518,
+          "recall": 0.749533261275425,
+          "f1-score": 0.7850038666424259,
+          "support": 20354.0
+        }
+      },
+      "0.6": {
+        "No Readmit": {
+          "precision": 0.9103353079887272,
+          "recall": 0.8752972405021291,
+          "f1-score": 0.8924725119819565,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.23997303673744524,
+          "recall": 0.313518273888155,
+          "f1-score": 0.2718594883543337,
+          "support": 2271.0
+        },
+        "accuracy": 0.8126166846811438,
+        "macro avg": {
+          "precision": 0.5751541723630862,
+          "recall": 0.594407757195142,
+          "f1-score": 0.5821660001681451,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8355395568827203,
+          "recall": 0.8126166846811438,
+          "f1-score": 0.8232275391678497,
+          "support": 20354.0
+        }
+      },
+      "0.65": {
+        "No Readmit": {
+          "precision": 0.903844100373732,
+          "recall": 0.9361831554498701,
+          "f1-score": 0.9197294434031457,
+          "support": 18083.0
+        },
+        "Readmitted <30": {
+          "precision": 0.2894088669950739,
+          "recall": 0.2069572875385293,
+          "f1-score": 0.24133504492939667,
+          "support": 2271.0
+        },
+        "accuracy": 0.8548196914611379,
+        "macro avg": {
+          "precision": 0.596626483684403,
+          "recall": 0.5715702214941997,
+          "f1-score": 0.5805322441662711,
+          "support": 20354.0
+        },
+        "weighted avg": {
+          "precision": 0.8352884152502705,
+          "recall": 0.8548196914611379,
+          "f1-score": 0.8440375067354695,
+          "support": 20354.0
+        }
+      }
+    }
+  },
+  "num_features": 66,
+  "num_train_rows": 81412,
+  "num_test_rows": 20354,
+  "model_file": "diabetes_readmission_xgb_model_20260714_080924_c47d6a2.json",
+  "promoted_to_production": true
+}
