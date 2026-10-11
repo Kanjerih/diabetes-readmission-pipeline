@@ -150,5 +150,14 @@
     "model_file": "diabetes_readmission_xgb_model_20261004_075116_45ee95d.json",
     "metadata_file": "diabetes_readmission_xgb_model_20261004_075116_45ee95d.metadata.json",
     "promoted_to_production": true
+  },
+  {
+    "version_id": "20261011_082240_1120746",
+    "timestamp_utc": "20261011_082240",
+    "git_commit": "1120746",
+    "roc_auc": 0.6824506173439256,
+    "model_file": "diabetes_readmission_xgb_model_20261011_082240_1120746.json",
+    "metadata_file": "diabetes_readmission_xgb_model_20261011_082240_1120746.metadata.json",
+    "promoted_to_production": true
   }
 ]
